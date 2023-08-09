@@ -9,7 +9,7 @@ import {
 } from "wagmi";
 
 import { stringify } from "../utils/stringify";
-import { erc721DropABI } from "@zoralabs/nft-drop-contracts";
+import { erc721DropABI } from "@zoralabs/zora-721-contracts";
 
 export function MintERC721() {
   const { address } = useAccount();
