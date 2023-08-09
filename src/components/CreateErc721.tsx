@@ -1,28 +1,23 @@
 "use client";
 
-import { useState } from "react";
 import { BaseError, Address } from "viem";
 import {
-  useAccount,
-  useChainId,
   useContractWrite,
   usePrepareContractWrite,
   useWaitForTransaction,
+  useChainId,
+  useAccount,
 } from "wagmi";
 
-import { wagmiContractConfig } from "./contracts";
-import { useDebounce } from "../hooks/useDebounce";
 import { stringify } from "../utils/stringify";
 import { zoraNftCreatorV1Config } from "@zoralabs/zora-721-contracts";
 
 export function WriteContractPrepared() {
-  const [tokenId, setTokenId] = useState("");
-  const debouncedTokenId = useDebounce(tokenId);
-
-  const chainId = useChainId(); //as Address;
+  const chainId = useChainId() as keyof typeof zoraNftCreatorV1Config.address;
 
   const { address } = useAccount();
 
+  // hardcoded erc721 creation params.
   const contractName = "My fun new contract";
   const symbol = "MCR";
   const editionSize = 50n;
@@ -32,16 +27,17 @@ export function WriteContractPrepared() {
   const description = "my awesome token";
   const animationUri = "0x0";
   const imageUri = "0x0";
+  // max value for maxSalePurchasePerAddress, results in no mint limit
   const maxSalePurchasePerAddress = 4294967295;
   const createReferral = address!;
 
+  // prepare the transaction
   const {
     config,
     error: prepareError,
     isError: isPrepareError,
   } = usePrepareContractWrite({
     abi: zoraNftCreatorV1Config.abi,
-    // @ts-ignore
     address: zoraNftCreatorV1Config.address[chainId] as Address,
     functionName: "createEditionWithReferral",
     args: [
@@ -57,6 +53,7 @@ export function WriteContractPrepared() {
         presaleStart: 0n,
         presaleMerkleRoot:
           "0x0000000000000000000000000000000000000000000000000000000000000000",
+        // max value for end date, results in no end date for mint
         publicSaleEnd: 18446744073709551615n,
         publicSalePrice: 0n,
         publicSaleStart: 0n,
