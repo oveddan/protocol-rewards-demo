@@ -3,7 +3,7 @@
 This repo shows how to create and mint erc721 tokens on the zora / zora goerli network, with protocol rewards.
 This is the code from the Zora 101 workshop at ETHGlobal's Superhack.
 
-It was originally generated using the `wagmi` cli, with the commamnd: `yarn create wagmi`
+The application was originally scaffolded using the [wagmi cli](https://wagmi.sh/cli/create-wagmi), with the commamnd: `yarn create wagmi`
 
 ## Getting Started
 
